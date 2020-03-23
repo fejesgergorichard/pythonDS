@@ -1,4 +1,4 @@
-# 2020.03.17. - FGR
+# 2020.03.23. - FGR
 # REQUIRED PACKAGES:
 # ----------------------------------------------------------------------
 # pip list (or conda list)
@@ -29,8 +29,8 @@ def main():
     if (doPlotting.lower() == 'y') :
         showData(filesList)
 
-# Plotting function with next button and stats in terminal
 def showData(filesList) :
+"""Plotting function with next button and stats in terminal"""
     global index
     global adatok
     # Read the input data
@@ -52,11 +52,11 @@ def showData(filesList) :
     # Show plot
     plt.show()
 
-# Convert function for numbers to characters
 def convert(uniquesArray) :
+"""Convert function for numbers to characters"""
     # Create uniqueChars array with the same size as the input
     uniqueCharsArray = uniquesArray
-    
+
     # Enumerate the input array and convert each number to its ASCII character. Simply its chr(c), but we strip the input numbers to be sure
     for index, c in enumerate(uniquesArray) :
         try:
@@ -64,12 +64,11 @@ def convert(uniquesArray) :
             index += 1
         except:
             print('error with: ' + str(c))
-        
+
     return uniqueCharsArray
 
-
-# Update function for the button
 def update(event):
+"""Update function for the button"""
     # Increment 'index' by 1
     global index
     index += 1
@@ -84,7 +83,7 @@ def update(event):
     # Recreate the nextButton
     global subax
     subax = plt.axes([0.8, 0.025, 0.1, 0.04])
-    global nextButton 
+    global nextButton
     nextButton = Button(subax, 'Next', color='red', hovercolor='0.975')
 
     # Actually redraw the figure
@@ -105,6 +104,7 @@ def update(event):
     nextButton.on_clicked(update)
 
 def processData(fileToOpen) :
+"""Analysis and creating a processed .csv file"""
     # Open output file
     adatok = pd.read_csv('exports\\' + fileToOpen + '.csv', sep = ';')
     output = open('exports\\' + fileToOpen + '_processed.csv', 'w')
@@ -121,7 +121,7 @@ def processData(fileToOpen) :
         if plotMax == plotMin :
             output.write(str(i) + "\t" + adatok.columns[i] + "\tTrue\t\t\t" + str(uniques.tolist()) + "\t" + str(convert(uniques.tolist())))
             output.write('\n')
-        
+
         # Counter has too many values and is not relevant
         elif adatok.columns[i] == 'ATR.IN.HEADER.RECIEVE_COUNT_B' :
             output.write(str(i) + "\t" + adatok.columns[i] + "\t" + 'Increasing')
@@ -135,7 +135,5 @@ def processData(fileToOpen) :
     # Close the output file
     output.close()
 
-#------------------------------------------------------------------
-# Run main
 if __name__ == "__main__":
     main()
