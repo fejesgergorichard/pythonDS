@@ -6,13 +6,17 @@
 # MULTIPLE CODE:
 # "!!!!!!!!!!  A00000000000000"
 
-allBarCodes = []
+
+telegramArray = ""
 startingCode = 1111111111
 
-currentCode = startingCode
-for i in range(1,255) :
-    currentCodeTelegram = '"??????????  ;' + str(currentCode) + '  00"'
-    allBarCodes.append(currentCodeTelegram)
-    currentCode += 1
+for i in range(255) :
+    currentCodeTelegram = '"??????????  ;' + str(startingCode + i) + '  00"'
+    if i != 254 :
+        telegramArray += currentCodeTelegram + ', \n'
+    else :
+        telegramArray += currentCodeTelegram
 
-print(allBarCodes)
+print(telegramArray)
+with open('generatedBarCodes.txt', 'w') as output :  
+    output.write(telegramArray)
