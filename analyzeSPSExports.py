@@ -127,8 +127,8 @@ def processData(fileToOpen) :
             output.write(str(i) + "\t" + adatok.columns[i] + "\t" + 'Increasing')
             output.write('\n')
         else :
-            print(uniques.tolist())
-            print(convert(uniques.tolist()))
+            print('Unique values: ' + str(uniques.tolist()))
+            print(convert('Unique ASCII Characters: ' + str(uniques.tolist())))
             output.write(str(i) + "\t" + adatok.columns[i] + "\tFalse\t" + str(plotMin) + "\t" + str(plotMax) + "\t" + str(uniques.tolist()) + "\t" + str(convert(uniques.tolist())))
             output.write('\n')
 
