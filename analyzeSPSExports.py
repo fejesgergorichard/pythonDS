@@ -17,6 +17,7 @@ from matplotlib.widgets import Button
 
 def main():
     filesList = ['XR_DATA1', 'XR_DATA2']
+    
 
     doProcessing = input('Do you want to process ' + str(filesList) + ' files? (y/n)')
     # Process all data if asked
