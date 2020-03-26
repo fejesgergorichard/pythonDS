@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt
 from matplotlib.widgets import Button
 
 def main():
-    filesList = ['DATA1', 'DATA2', 'DATA3', 'DATA4', 'DATA5']
+    filesList = ['XR_DATA1', 'XR_DATA2']
 
     doProcessing = input('Do you want to process ' + str(filesList) + ' files? (y/n)')
     # Process all data if asked
@@ -30,13 +30,13 @@ def main():
         showData(filesList)
 
 def showData(filesList) :
-"""Plotting function with next button and stats in terminal"""
+    """Plotting function with next button and stats in terminal"""
     global index
     global adatok
     # Read the input data
     adatok = pd.read_csv('exports\\' + filesList[1] + '.csv', sep = ';')
     # Set the starting index of the data to be plotted
-    index = 5
+    index = 4
     # Create the scatter plot and add labels
     plt.scatter(adatok.loc[:,'Relativzeit'], adatok.iloc[:, index])
     plt.xlabel(adatok.columns[index])
@@ -53,7 +53,7 @@ def showData(filesList) :
     plt.show()
 
 def convert(uniquesArray) :
-"""Convert function for numbers to characters"""
+    """Convert function for numbers to characters"""
     # Create uniqueChars array with the same size as the input
     uniqueCharsArray = uniquesArray
 
@@ -68,7 +68,7 @@ def convert(uniquesArray) :
     return uniqueCharsArray
 
 def update(event):
-"""Update function for the button"""
+    """Update function for the button"""
     # Increment 'index' by 1
     global index
     index += 1
@@ -104,7 +104,7 @@ def update(event):
     nextButton.on_clicked(update)
 
 def processData(fileToOpen) :
-"""Analysis and creating a processed .csv file"""
+    """Analysis and creating a processed .csv file"""
     # Open output file
     adatok = pd.read_csv('exports\\' + fileToOpen + '.csv', sep = ';')
     output = open('exports\\' + fileToOpen + '_processed.csv', 'w')
@@ -112,7 +112,7 @@ def processData(fileToOpen) :
     # Create the header
     output.write("Index\tName\tIsConst\tMin\tMax\tUnique values\tUnique values in characters\n")
 
-    for i in range(5, 98) :
+    for i in range(4, len(adatok.iloc[1, :])-1) :
         plotMin = np.min(adatok.iloc[:, i])
         plotMax = np.max(adatok.iloc[:, i])
         uniques = pd.unique(adatok.iloc[:, i])
