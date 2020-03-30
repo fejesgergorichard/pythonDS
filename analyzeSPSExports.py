@@ -16,8 +16,7 @@ from matplotlib import pyplot as plt
 from matplotlib.widgets import Button
 
 def main():
-    filesList = ['XR_DATA1', 'XR_DATA2']
-    
+    filesList = ['XR_DATA1']
 
     doProcessing = input('Do you want to process ' + str(filesList) + ' files? (y/n)')
     # Process all data if asked
@@ -26,7 +25,7 @@ def main():
             processData(file)
 
     # Do the plotting if asked
-    doPlotting = input('Do you want to plot the data from \'' + str(filesList[1]) + '\' ? (y/n)')
+    doPlotting = input('Do you want to plot the data from \'' + str(filesList[0]) + '\' ? (y/n)')
     if (doPlotting.lower() == 'y') :
         showData(filesList)
 
@@ -62,7 +61,7 @@ def convert(uniquesArray) :
     for index, c in enumerate(uniquesArray) :
         try:
             uniqueCharsArray[index] = chr(int(str(c).strip()))
-            index += 1
+            #index += 1
         except:
             print('error with: ' + str(c))
 
@@ -129,7 +128,7 @@ def processData(fileToOpen) :
             output.write('\n')
         else :
             print('Unique values: ' + str(uniques.tolist()))
-            print(convert('Unique ASCII Characters: ' + str(uniques.tolist())))
+            print('Unique ASCII Characters: ' + str(convert(uniques.tolist())))
             output.write(str(i) + "\t" + adatok.columns[i] + "\tFalse\t" + str(plotMin) + "\t" + str(plotMax) + "\t" + str(uniques.tolist()) + "\t" + str(convert(uniques.tolist())))
             output.write('\n')
 
