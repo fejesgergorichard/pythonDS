@@ -36,7 +36,7 @@ def incrementList(oldValues):
             newValues[i][j] = entry + 1
             j += 1
         i += 1
-    print(newValues)
+
     return newValues
 
 def buttonFunction():
