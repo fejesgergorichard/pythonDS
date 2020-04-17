@@ -124,13 +124,13 @@ for entry in labels[len(labels)-1]:
 print('Number of labels: ' + str(len(labels)) + ' x ' + str(len(labels[0])) + ' = ' + str(len(labels) * len(labels[0])))
 
 def nextButtonFunction():
-    """Function for the next button. Uses the refreshLabels function"""
+    """Function for the next button. Uses the refreshLabels() function"""
     global index
     index += 1
     refreshLabels()
 
 def backButtonFunction():
-    """Function for the next button. Uses the refreshLabels function"""
+    """Function for the back button. Uses the refreshLabels() function"""
     global index
     if (index > 8) :
       index -= 1
