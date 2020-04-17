@@ -24,13 +24,23 @@ var = [
         [StringVar(), StringVar(), StringVar(), StringVar()]
     ]
 
+var = []
+
+for i in range(3):
+    entryLine = []
+    for j in range(4):
+        entryLine.append(StringVar())
+    var.append(entryLine)
+
+print(var)
+
 labels = [
             [Label(gui, relief=RAISED, textvariable = var[0][0]), Label(gui, relief=RAISED, textvariable = var[0][1]), Label(gui, relief=RAISED, textvariable = var[0][2]), Label(gui, relief=RAISED, textvariable = var[0][3])],
             [Label(gui, relief=RAISED, textvariable = var[1][0]), Label(gui, relief=RAISED, textvariable = var[1][1]), Label(gui, relief=RAISED, textvariable = var[1][2]), Label(gui, relief=RAISED, textvariable = var[1][3])],
             [Label(gui, relief=RAISED, textvariable = var[2][0]), Label(gui, relief=RAISED, textvariable = var[2][1]), Label(gui, relief=RAISED, textvariable = var[2][2]), Label(gui, relief=RAISED, textvariable = var[2][3])]    
         ]
-
-print(labels)
+print()
+print(len(labels))
 
 labelsValues = [[48,49,50,51],[52,53,54,55],[70,71,72,73,74]]
 
@@ -40,7 +50,6 @@ for row in var:
     j = 0
     for item in row:
         item.set(chr(labelsValues[i][j]))
-        print(item.get())
         j += 1
     i += 1
 
@@ -51,7 +60,6 @@ for lists in labels:
     for label in lists:
         label.grid(row = i, column = j)
         label.textvariable = var[j-1][i]
-        print(label.textvariable)
         i += 1
     j += 1
 
@@ -80,7 +88,6 @@ def buttonFunction():
         j = 0
         for item in row:
             item.set(chr(labelsValues[i][j]))
-            print(item.get())
             j += 1
         i += 1
 
