@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 import pandas as pd
 import re
+
 class ScrollableFrame(ttk.Frame):
     def __init__(self, container, *args, **kwargs):
         super().__init__(container, *args, **kwargs)
@@ -23,7 +24,7 @@ class ScrollableFrame(ttk.Frame):
         canvas.pack(side="left", fill = BOTH, expand=1)
         scrollbar.pack(side="right", fill="y")
 
-index = 8
+index = 1
 
 root = tk.Tk()
 root.title("Telegram viewer")
@@ -45,7 +46,7 @@ root.geometry("%dx%d+%d+%d" % (width_of_window, height_of_window, x_coordinate, 
 frame = ScrollableFrame(root)
 
 # Read data from .csv file
-data = pd.read_csv('data/XR_DATA3.csv', sep = ';')
+data = pd.read_csv('data/XR_DATA3_Modified.csv', sep = ';')
 print(data.shape)
 print(data.columns)
 
@@ -72,6 +73,7 @@ for i in range(len(infoLabels)):
             newLabel = ttk.Label(frame.scrollable_frame, relief = GROOVE, text = 's', width = 4, background = '#FFFFFF')
         else :
             newLabel = ttk.Label(frame.scrollable_frame, relief = GROOVE, text = 's', width = 4, background = '#DDDDDD')
+        # The tkinter .grid() and .pack() function always need to be in a separate row, because they return a 'None' value
         newLabel.grid(row = i, column = j+1)
         entryList.append(newLabel)
     labels.append(entryList)
@@ -84,55 +86,63 @@ def refreshLabels():
   for row in labels:
     j = 0
     for label in row:
-      if (re.match(regexString, infoLabels[i]['text'])) :
-        print("Regex match found: " + infoLabels[i]['text'])
-        labels[i][j]['text'] = "'" + chr(data[infoLabels[i]['text']][index + j]) + "'"
-      else :
-        labels[i][j]['text'] = data[infoLabels[i]['text']][index + j]
-      j += 1
+        # If the regular expression finds a match for a row, those values must be shown as characters (IB 515-539 and QB 515-539)
+        if (re.match(regexString, infoLabels[i]['text'])) :
+            labels[i][j]['text'] = "'" + chr(data[infoLabels[i]['text']][index + j]) + "'"
+        else :
+            labels[i][j]['text'] = data[infoLabels[i]['text']][index + j]
+        j += 1
     i += 1
 
 refreshLabels()
 
+# Modify the first two rows for the Time to be readable
 i = 0
-for entry in labels[len(labels)-2]:
+for entry in labels[0]:
     if (i % 2 != 0) :
         entry.grid_forget()
         #entry['text'] = ''
     else :
-        entry['text'] = '17:10:26.432'
-        entry['font'] = ("Helvetica", 7)
-        entry['width'] = 9
+        entry['font'] = ("Helvetica", 6)
+        entry['width'] = 12
         entry['anchor'] = W
         entry.grid(columnspan = 2, sticky = W)
     i += 1
-
 i = 0
-for entry in labels[len(labels)-1]:
+for entry in labels[1]:
     if (i % 2 == 0) :
         entry.grid_forget()
         #entry['text'] = ''
     else :
-        entry['text'] = '17:10:26.432'
-        entry['font'] = ("Helvetica", 7)
-        entry['width'] = 9
+        entry['font'] = ("Helvetica", 6)
+        entry['width'] = 12
         entry['anchor'] = W
         entry.grid(columnspan = 2, sticky = W)
     i += 1
 
+
+
 #print('Your labels are: \n' + str(labels))
 print('Number of labels: ' + str(len(labels)) + ' x ' + str(len(labels[0])) + ' = ' + str(len(labels) * len(labels[0])))
+print('Length of data: ' + str(len(data)))
 
 def nextButtonFunction():
     """Function for the next button. Uses the refreshLabels() function"""
     global index
-    index += 1
-    refreshLabels()
+
+    # Stop at the end of the data
+    if (index < len(data)) :
+        index += 1
+        refreshLabels()
+    else :
+        pass
 
 def backButtonFunction():
     """Function for the back button. Uses the refreshLabels() function"""
     global index
-    if (index > 8) :
+
+    # Stop at the beginning of the data
+    if (index > 1) :
       index -= 1
       refreshLabels()
     else :
